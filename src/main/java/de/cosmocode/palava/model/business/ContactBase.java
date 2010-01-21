@@ -1,4 +1,4 @@
-package de.cosmocode.palava.model;
+package de.cosmocode.palava.model.business;
 
 import de.cosmocode.palava.model.base.EntityBase;
 

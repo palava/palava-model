@@ -1,4 +1,4 @@
-package de.cosmocode.palava.model;
+package de.cosmocode.palava.model.business;
 
 import com.google.common.collect.ImmutableSet;
 
