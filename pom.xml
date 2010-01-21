@@ -18,5 +18,10 @@
   		<groupId>com.google.collections</groupId>
   		<artifactId>google-collections</artifactId>
   	</dependency>
+  	<dependency>
+  		<groupId>de.cosmocode.palava.services</groupId>
+  		<artifactId>palava-persistence</artifactId>
+  		<version>1.4-SNAPSHOT</version>
+  	</dependency>
   </dependencies>
 </project>

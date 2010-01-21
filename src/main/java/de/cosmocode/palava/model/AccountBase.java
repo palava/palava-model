@@ -2,7 +2,9 @@ package de.cosmocode.palava.model;
 
 import com.google.common.collect.ImmutableSet;
 
-public interface AccountBase {
+import de.cosmocode.palava.model.base.EntityBase;
+
+public interface AccountBase extends EntityBase {
 
     ImmutableSet<? extends ContactBase> getContacts();
     
