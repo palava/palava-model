@@ -9,19 +9,19 @@
   <artifactId>palava-model</artifactId>
   <version>1.0-SNAPSHOT</version>
   <dependencies>
-  	<dependency>
-  		<groupId>javax.persistence</groupId>
-  		<artifactId>persistence-api</artifactId>
-  		<version>1.0</version>
-  	</dependency>
-  	<dependency>
-  		<groupId>com.google.collections</groupId>
-  		<artifactId>google-collections</artifactId>
-  	</dependency>
-  	<dependency>
-  		<groupId>de.cosmocode.palava.services</groupId>
-  		<artifactId>palava-persistence</artifactId>
-  		<version>1.4-SNAPSHOT</version>
-  	</dependency>
+      <dependency>
+          <groupId>javax.persistence</groupId>
+          <artifactId>persistence-api</artifactId>
+          <version>1.0</version>
+      </dependency>
+      <dependency>
+          <groupId>com.google.collections</groupId>
+          <artifactId>google-collections</artifactId>
+      </dependency>
+      <dependency>
+          <groupId>de.cosmocode.palava.services</groupId>
+          <artifactId>palava-persistence</artifactId>
+          <version>1.4-SNAPSHOT</version>
+      </dependency>
   </dependencies>
 </project>
