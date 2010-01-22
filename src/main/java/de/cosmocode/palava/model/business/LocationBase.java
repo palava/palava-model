@@ -31,9 +31,9 @@ public interface LocationBase extends JSONMapable {
     Double getLatitude();
     
     void setLatitude(Double latitude);
-
+    
     Double getLongitude();
     
     void setLongitude(Double longitude);
-
+    
 }

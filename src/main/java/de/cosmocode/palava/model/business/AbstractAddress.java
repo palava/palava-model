@@ -20,6 +20,7 @@
 package de.cosmocode.palava.model.business;
 
 import javax.persistence.Column;
+import javax.persistence.Transient;
 
 import com.google.common.base.Preconditions;
 
@@ -67,6 +68,9 @@ public abstract class AbstractAddress implements AddressBase {
     private String email;
     
     private String website;
+    
+    @Transient
+    private transient LocationBase location;
     
     @Override
     public String getStreet() {
@@ -152,11 +156,16 @@ public abstract class AbstractAddress implements AddressBase {
     
     @Override
     public LocationBase getLocation() {
-        return new InternalLocation();
+        if (location == null) {
+            location = new InternalLocation();
+        }
+        return location;
     }
     
     /**
-     * 
+     * Internal implementation of the {@link LocationBase} interface which
+     * owns a reference to the enclosing class and is able to directly manipulate the
+     * corresponding values.
      *
      * @author Willi Schoenborn
      */
