@@ -2,7 +2,6 @@ package de.cosmocode.palava.model.business;
 
 import java.util.Set;
 
-import de.cosmocode.palava.model.base.AddressBase;
 import de.cosmocode.palava.model.base.EntityBase;
 
 public interface AccountBase extends EntityBase {
