@@ -102,7 +102,7 @@ public abstract class AbstractContact extends AbstractEntity implements ContactB
 
     @Override
     public String getLanguageCode() {
-        return languageCode;
+        return languageCode == null ? null : languageCode.toLowerCase();
     }
 
     @Override

@@ -144,7 +144,7 @@ public abstract class AbstractAddress implements AddressBase {
     
     @Override
     public String getCountryCode() {
-        return countryCode;
+        return countryCode == null ? null : countryCode.toUpperCase();
     }
     
     @Override
