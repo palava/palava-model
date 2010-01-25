@@ -2,12 +2,8 @@ package de.cosmocode.palava.model.business;
 
 import java.util.Date;
 
-import de.cosmocode.palava.model.base.EntityBase;
-
-public interface ContactBase extends EntityBase {
+public interface ContactBase extends AccountMemberBase {
     
-    AccountBase getAccount();
-
     String getTitle();
     
     void setTitle(String title);

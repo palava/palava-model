@@ -26,6 +26,7 @@ import com.google.common.base.Preconditions;
 
 import de.cosmocode.commons.TrimMode;
 import de.cosmocode.json.JSONRenderer;
+import de.cosmocode.json.RenderLevel;
 
 /**
  * Abstract base implementation of the {@link AddressBase} interface.
@@ -257,21 +258,27 @@ public abstract class AbstractAddress implements AddressBase {
     
     @Override
     public JSONRenderer renderAsMap(JSONRenderer renderer) {
-        return renderer.
-            key("street").value(getStreet()).
-            key("streetNumber").value(getStreetNumber()).
-            key("additional").value(getAdditional()).
-            key("postalCode").value(getPostalCode()).
-            key("district").value(getDistrict()).
-            key("cityName").value(getCityName()).
-            key("state").value(getState()).
-            key("countryCode").value(getCountryCode()).
-            key("location").object(getLocation()).
-            key("phone").value(getPhone()).
-            key("mobilePhone").value(getMobilePhone()).
-            key("fax").value(getFax()).
-            key("email").value(getEmail()).
-            key("website").value(getWebsite());
+        if (renderer.eq(RenderLevel.MEDIUM)) {
+            renderer.
+                key("street").value(getStreet()).
+                key("streetNumber").value(getStreetNumber()).
+                key("postalCode").value(getPostalCode()).
+                key("cityName").value(getCityName()).
+                key("countryCode").value(getCountryCode()).
+                key("location").object(getLocation()).
+                key("email").value(getEmail()).
+                key("website").value(getWebsite());
+        }
+        if (renderer.eq(RenderLevel.LONG)) {
+            renderer.
+                key("additional").value(getAdditional()).
+                key("district").value(getDistrict()).
+                key("state").value(getState()).
+                key("phone").value(getPhone()).
+                key("mobilePhone").value(getMobilePhone()).
+                key("fax").value(getFax());
+        }
+        return renderer;
     }
 
 }

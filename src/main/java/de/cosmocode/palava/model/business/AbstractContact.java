@@ -6,6 +6,7 @@ import javax.persistence.Column;
 
 import de.cosmocode.commons.TrimMode;
 import de.cosmocode.json.JSONRenderer;
+import de.cosmocode.json.RenderLevel;
 import de.cosmocode.palava.model.base.AbstractEntity;
 
 /**
@@ -114,19 +115,28 @@ public abstract class AbstractContact extends AbstractEntity implements ContactB
     
     @Override
     public JSONRenderer renderAsMap(JSONRenderer renderer) {
-        return
-            super.renderAsMap(renderer).
-            key("account").object().
-                key("id").value(getAccount().getId()).
-            endObject().
-            key("title").value(getTitle()).
-            key("forename").value(getForename()).
-            key("surname").value(getSurname()).
-            key("address").object(getAddress()).
-            key("username").value(getUsername()).
-            key("activatedAt").value(getActivatedAt()).
-            key("isActivated").value(isActivated()).
-            key("languageCode").value(getLanguageCode());
+        super.renderAsMap(renderer);
+        
+        if (renderer.eq(RenderLevel.TINY)) {
+            renderer.
+                key("account").object().
+                    key("id").value(getAccount().getId()).
+                endObject().
+                key("title").value(getTitle()).
+                key("forename").value(getForename()).
+                key("surname").value(getSurname()).
+                key("languageCode").value(getLanguageCode());
+        }
+        if (renderer.eq(RenderLevel.SHORT)) {
+            renderer.
+                key("activatedAt").value(getActivatedAt()).
+                key("isActivated").value(isActivated());
+        }
+        if (renderer.eq(RenderLevel.MEDIUM)) {
+            renderer.
+                key("address").object(getAddress());
+        }
+        return renderer;
     }
 
 }
