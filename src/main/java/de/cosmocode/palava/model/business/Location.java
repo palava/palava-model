@@ -26,7 +26,7 @@ import de.cosmocode.json.JSONMapable;
  *
  * @author Willi Schoenborn
  */
-public interface LocationBase extends JSONMapable {
+public interface Location extends JSONMapable {
     
     Double getLatitude();
     

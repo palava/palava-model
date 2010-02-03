@@ -23,6 +23,6 @@ import de.cosmocode.json.JSONMapable;
 
 public interface Geographical extends JSONMapable {
 
-    LocationBase getLocation();
+    Location getLocation();
     
 }

@@ -20,6 +20,8 @@
 package de.cosmocode.palava.model.business;
 
 import javax.persistence.Column;
+import javax.persistence.Embeddable;
+import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
 
 import com.google.common.base.Preconditions;
@@ -33,6 +35,8 @@ import de.cosmocode.json.RenderLevel;
  * 
  * @author Willi Schoenborn
  */
+@Embeddable
+@MappedSuperclass
 public abstract class AbstractAddress implements AddressBase {
 
     private String street;
@@ -71,7 +75,7 @@ public abstract class AbstractAddress implements AddressBase {
     private String website;
     
     @Transient
-    private transient LocationBase location;
+    private transient Location location;
     
     @Override
     public String getStreet() {
@@ -156,7 +160,7 @@ public abstract class AbstractAddress implements AddressBase {
     }
     
     @Override
-    public LocationBase getLocation() {
+    public Location getLocation() {
         if (location == null) {
             location = new InternalLocation();
         }
@@ -164,7 +168,7 @@ public abstract class AbstractAddress implements AddressBase {
     }
     
     /**
-     * Internal implementation of the {@link LocationBase} interface which
+     * Internal implementation of the {@link Location} interface which
      * owns a reference to the enclosing class and is able to directly manipulate the
      * corresponding values.
      *
@@ -195,7 +199,7 @@ public abstract class AbstractAddress implements AddressBase {
     }
     
     @Override
-    public void setLocation(LocationBase location) {
+    public void setLocation(Location location) {
         Preconditions.checkNotNull(location, "Location");
         this.latitude = location.getLatitude();
         this.longitude = location.getLongitude();

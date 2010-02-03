@@ -70,9 +70,9 @@ public interface AddressBase extends Geographical, JSONMapable {
      * 
      * @return 
      */
-    LocationBase getLocation();
+    Location getLocation();
     
-    void setLocation(LocationBase location);
+    void setLocation(Location location);
     
     boolean hasLocation();
     

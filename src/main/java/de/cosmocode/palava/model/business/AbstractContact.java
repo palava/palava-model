@@ -20,8 +20,11 @@
 package de.cosmocode.palava.model.business;
 
 import java.util.Date;
+import java.util.Locale;
 
 import javax.persistence.Column;
+
+import com.google.common.base.Preconditions;
 
 import de.cosmocode.commons.TrimMode;
 import de.cosmocode.json.JSONRenderer;
@@ -48,7 +51,7 @@ public abstract class AbstractContact extends AbstractEntity implements ContactB
     @Column(name = "activated_at")
     private Date activatedAt;
     
-    private String languageCode;
+    private Locale locale;
 
     @Override
     public String getTitle() {
@@ -121,15 +124,13 @@ public abstract class AbstractContact extends AbstractEntity implements ContactB
     }
 
     @Override
-    public String getLanguageCode() {
-        return languageCode == null ? null : languageCode.toLowerCase();
+    public Locale getLocale() {
+        return locale;
     }
 
     @Override
-    public void setLanguageCode(String languageCode) {
-        this.languageCode = TrimMode.NULL.apply(languageCode);
-        if (this.languageCode == null) return;
-        this.languageCode = this.languageCode.toLowerCase();
+    public void setLocale(Locale locale) {
+        this.locale = Preconditions.checkNotNull(locale, "Locale");
     }
     
     @Override
@@ -144,7 +145,7 @@ public abstract class AbstractContact extends AbstractEntity implements ContactB
                 key("title").value(getTitle()).
                 key("forename").value(getForename()).
                 key("surname").value(getSurname()).
-                key("languageCode").value(getLanguageCode());
+                key("locale").value(getLocale());
         }
         if (renderer.eq(RenderLevel.SHORT)) {
             renderer.

@@ -19,22 +19,20 @@
 
 package de.cosmocode.palava.model.business;
 
-import de.cosmocode.json.JSONMapable;
-import de.cosmocode.json.JSONRenderer;
+public enum WeekDay {
 
-/**
- * Abstract base implementation of the {@link Location} interface
- * which provides meaningful {@link JSONMapable#renderAsMap(JSONRenderer)} method.
- *
- * @author Willi Schoenborn
- */
-public abstract class AbstractLocation implements Location {
-
-    @Override
-    public JSONRenderer renderAsMap(JSONRenderer renderer) {
-        return renderer.
-            key("latitude").value(getLatitude()).
-            key("longitude").value(getLongitude());
-    }
-
+    MONDAY,
+    
+    TUESDAY,
+    
+    WEDNESDAY,
+    
+    THURSDAY,
+    
+    FRIDAY,
+    
+    SATURDAY,
+    
+    SUNDAY;
+    
 }

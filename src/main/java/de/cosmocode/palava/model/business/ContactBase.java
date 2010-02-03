@@ -20,6 +20,7 @@
 package de.cosmocode.palava.model.business;
 
 import java.util.Date;
+import java.util.Locale;
 
 public interface ContactBase extends AccountMemberBase {
     
@@ -60,13 +61,8 @@ public interface ContactBase extends AccountMemberBase {
     
     boolean isActivated();
     
-    String getLanguageCode();
+    Locale getLocale();
     
-    /**
-     * ISO 639, lowercase
-     * 
-     * @param languageCode
-     */
-    void setLanguageCode(String languageCode);
+    void setLocale(Locale locale);
     
 }
