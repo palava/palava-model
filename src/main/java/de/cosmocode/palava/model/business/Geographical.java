@@ -19,10 +19,38 @@
 
 package de.cosmocode.palava.model.business;
 
+import com.google.common.base.Function;
+
 import de.cosmocode.json.JSONMapable;
 
+/**
+ * A geographical is associated with a {@link Location}.
+ *
+ * @author Willi Schoenborn
+ */
 public interface Geographical extends JSONMapable {
 
+    /**
+     * Can be used in combination with {@link Location.DistanceOrdering} to create
+     * a distance ordering for {@link Geographical}s.
+     * <p>
+     *   {@code Location.DistanceOrdering.create(center).onResultOf(Geographical.TO_LOCATION).nullsLast()}
+     * </p>
+     */
+    Function<Geographical, Location> TO_LOCATION = new Function<Geographical, Location>() {
+        
+        @Override
+        public Location apply(Geographical from) {
+            return from.getLocation();
+        }
+        
+    };
+    
+    /**
+     * Retrieves the location of this geographical.
+     * 
+     * @return the location or null if there is no location
+     */
     Location getLocation();
     
 }

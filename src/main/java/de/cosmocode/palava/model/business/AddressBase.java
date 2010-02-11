@@ -59,7 +59,7 @@ public interface AddressBase extends Geographical, JSONMapable {
     String getCountryCode();
     
     /**
-     * document toUpperCase
+     * TODO document toUpperCase
      * 
      * @param countryCode
      */

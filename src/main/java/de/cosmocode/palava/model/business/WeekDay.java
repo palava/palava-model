@@ -19,6 +19,11 @@
 
 package de.cosmocode.palava.model.business;
 
+/**
+ * Represents each day of the week, starting with monday.
+ *
+ * @author Willi Schoenborn
+ */
 public enum WeekDay {
 
     MONDAY,
