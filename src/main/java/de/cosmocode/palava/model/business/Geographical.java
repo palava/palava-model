@@ -44,6 +44,11 @@ public interface Geographical extends JSONMapable {
             return from.getLocation();
         }
         
+        @Override
+        public String toString() {
+            return String.format("%s.TO_LOCATION", Geographical.class.getSimpleName());
+        };
+        
     };
     
     /**

@@ -61,6 +61,11 @@ public interface Location extends JSONMapable {
                 return from.getLatitude() == null || from.getLongitude() == null ? null : from;
             }
             
+            @Override
+            public String toString() {
+                return String.format("%s.TO_NULL", DistanceOrdering.class.getSimpleName());
+            };
+            
         };
         
         private static final Logger LOG = LoggerFactory.getLogger(DistanceOrdering.class);
