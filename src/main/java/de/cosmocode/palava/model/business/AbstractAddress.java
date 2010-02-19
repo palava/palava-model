@@ -70,6 +70,7 @@ public abstract class AbstractAddress implements AddressBase {
     
     private String fax;
     
+    @Column(unique = true)
     private String email;
     
     private String website;

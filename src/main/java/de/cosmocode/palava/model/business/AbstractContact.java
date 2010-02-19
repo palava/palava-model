@@ -44,8 +44,6 @@ public abstract class AbstractContact extends AbstractEntity implements ContactB
     
     private String surname;
     
-    private String username;
-    
     private String password;
     
     @Column(name = "activated_at")
@@ -81,16 +79,6 @@ public abstract class AbstractContact extends AbstractEntity implements ContactB
     @Override
     public void setSurname(String surname) {
         this.surname = TrimMode.NULL.apply(surname);
-    }
-
-    @Override
-    public String getUsername() {
-        return username;
-    }
-
-    @Override
-    public void setUsername(String username) {
-        this.username = TrimMode.NULL.apply(username);
     }
 
     @Override

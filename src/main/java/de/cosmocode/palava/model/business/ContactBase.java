@@ -38,12 +38,6 @@ public interface ContactBase extends AccountMemberBase {
     
     AddressBase getAddress();
     
-    // TODO useful here?
-    
-    String getUsername();
-    
-    void setUsername(String username);
-    
     String getPassword();
     
     /**
