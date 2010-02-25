@@ -26,6 +26,7 @@ import javax.persistence.Transient;
 
 import com.google.common.base.Preconditions;
 
+import de.cosmocode.commons.Patterns;
 import de.cosmocode.commons.TrimMode;
 import de.cosmocode.json.JSONRenderer;
 import de.cosmocode.json.RenderLevel;
@@ -157,6 +158,9 @@ public abstract class AbstractAddress implements AddressBase {
     public void setCountryCode(String countryCode) {
         this.countryCode = TrimMode.NULL.apply(countryCode);
         if (this.countryCode == null) return;
+        Preconditions.checkArgument(Patterns.ISO_3166_1_ALPHA_2.matcher(countryCode).matches(), 
+                "%s does not match %s", countryCode, Patterns.ISO_3166_1_ALPHA_2.pattern()
+        );
         this.countryCode = this.countryCode.toUpperCase();
     }
     

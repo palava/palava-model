@@ -34,6 +34,10 @@ public interface AccountBase extends EntityBase {
     
     void setName(String name);
     
+    /**
+     * 
+     * @return the address associated with this account, may never be null
+     */
     AddressBase getAddress();
     
     /**
