@@ -24,11 +24,14 @@ import de.cosmocode.json.JSONRenderer;
 import de.cosmocode.json.RenderLevel;
 import de.cosmocode.palava.model.base.AbstractEntity;
 
+import javax.persistence.MappedSuperclass;
+
 /**
  * Abstract base implementation of the {@link AccountBase} interface.
  *
  * @author Willi Schoenborn
  */
+@MappedSuperclass
 public abstract class AbstractAccount extends AbstractEntity implements AccountBase {
 
     private String name;
@@ -37,16 +40,16 @@ public abstract class AbstractAccount extends AbstractEntity implements AccountB
     public String getName() {
         return name;
     }
-    
+
     @Override
     public void setName(String name) {
         this.name = TrimMode.NULL.apply(name);
     }
-    
+
     @Override
     public JSONRenderer renderAsMap(JSONRenderer renderer) {
         super.renderAsMap(renderer);
-        
+
         if (renderer.ge(RenderLevel.TINY)) {
             renderer.
                 key("name").value(getName());

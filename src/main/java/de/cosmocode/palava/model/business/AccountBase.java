@@ -27,24 +27,24 @@ public interface AccountBase extends EntityBase {
 
     /**
      * Generic, can be anything...
-     * 
+     *
      * @return
      */
     String getName();
-    
+
     void setName(String name);
-    
+
     /**
-     * 
+     *
      * @return the address associated with this account, may never be null
      */
     AddressBase getAddress();
-    
+
     /**
      * Left to the implementation ...
-     * 
+     *
      * @return
      */
     Set<? extends ContactBase> getContacts();
-    
+
 }

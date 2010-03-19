@@ -23,6 +23,7 @@ import java.util.Date;
 import java.util.Locale;
 
 import javax.persistence.Column;
+import javax.persistence.MappedSuperclass;
 
 import com.google.common.base.Preconditions;
 
@@ -36,19 +37,20 @@ import de.cosmocode.palava.model.base.AbstractEntity;
  *
  * @author Willi Schoenborn
  */
+@MappedSuperclass
 public abstract class AbstractContact extends AbstractEntity implements ContactBase {
 
     private String title;
-    
+
     private String forename;
-    
+
     private String surname;
-    
+
     private String password;
-    
+
     @Column(name = "activated_at")
     private Date activatedAt;
-    
+
     private Locale locale;
 
     @Override
@@ -100,12 +102,12 @@ public abstract class AbstractContact extends AbstractEntity implements ContactB
     public void setActivatedAt(Date activatedAt) {
         this.activatedAt = activatedAt;
     }
-    
+
     @Override
     public void setActivated() {
         setActivatedAt(new Date());
     }
-    
+
     @Override
     public boolean isActivated() {
         return getActivatedAt() != null;
@@ -120,11 +122,11 @@ public abstract class AbstractContact extends AbstractEntity implements ContactB
     public void setLocale(Locale locale) {
         this.locale = Preconditions.checkNotNull(locale, "Locale");
     }
-    
+
     @Override
     public JSONRenderer renderAsMap(JSONRenderer renderer) {
         super.renderAsMap(renderer);
-        
+
         if (renderer.eq(RenderLevel.TINY)) {
             renderer.
                 key("account").object().

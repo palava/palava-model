@@ -22,12 +22,15 @@ package de.cosmocode.palava.model.business;
 import de.cosmocode.json.JSONMapable;
 import de.cosmocode.json.JSONRenderer;
 
+import javax.persistence.MappedSuperclass;
+
 /**
  * Abstract base implementation of the {@link Location} interface
  * which provides meaningful {@link JSONMapable#renderAsMap(JSONRenderer)} method.
  *
  * @author Willi Schoenborn
  */
+@MappedSuperclass
 public abstract class AbstractLocation implements Location {
 
     @Override
