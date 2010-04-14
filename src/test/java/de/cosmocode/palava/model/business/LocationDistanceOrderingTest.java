@@ -61,6 +61,7 @@ public final class LocationDistanceOrderingTest {
         LOG.info("Testing {}.reverse() with {}", unit, locations);
         Collections.sort(locations, unit.reverse());
         Assert.assertEquals(locations, ImmutableList.of(ny, moscow, munich, berlin));
+        EasyMock.verify(berlin, munich, moscow, ny);
     }
     
     /**
@@ -78,6 +79,8 @@ public final class LocationDistanceOrderingTest {
         LOG.info("Testing {} with {}", unit, locations);
         Collections.sort(locations, unit);
         Assert.assertEquals(locations, Lists.newArrayList(berlin, munich, moscow, ny, nullCoords, nully));
+        EasyMock.verify(nullCoords);
+        EasyMock.verify(berlin, munich, moscow, ny);
     }
     
     private Location createLocation(String name, Double longitude, Double latitude) {
