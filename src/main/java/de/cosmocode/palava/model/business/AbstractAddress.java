@@ -19,10 +19,14 @@
 
 package de.cosmocode.palava.model.business;
 
+import java.util.Locale;
+
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
+
+import org.apache.commons.lang.StringUtils;
 
 import com.google.common.base.Preconditions;
 
@@ -97,6 +101,29 @@ public abstract class AbstractAddress implements AddressBase {
     @Override
     public void setStreetNumber(String streetNumber) {
         this.streetNumber = TrimMode.NULL.apply(streetNumber);
+    }
+    
+    @Override
+    public String getLocalizedAddress() {
+        if (StringUtils.isBlank(countryCode)) {
+            return getAddress();
+        } else if (Locale.CANADA.getCountry().equals(countryCode)) {
+            return getAddressInverse();
+        } else if (Locale.UK.getCountry().equals(countryCode)) {
+            return getAddressInverse();
+        } else  if (Locale.US.getCountry().equals(countryCode)) {
+            return getAddressInverse();
+        } else {
+            return getAddress();
+        }
+    }
+    
+    private String getAddress() {
+        return String.format("%s %s", street, streetNumber);
+    }
+    
+    private String getAddressInverse() {
+        return String.format("%s %s", streetNumber, street);
     }
     
     @Override

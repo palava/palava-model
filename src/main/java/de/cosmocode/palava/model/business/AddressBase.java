@@ -19,6 +19,8 @@
 
 package de.cosmocode.palava.model.business;
 
+import java.util.Locale;
+
 import de.cosmocode.json.JSONMapable;
 
 /**
@@ -35,6 +37,16 @@ public interface AddressBase extends Geographical, JSONMapable {
     String getStreetNumber();
     
     void setStreetNumber(String streetNumber);
+    
+    /**
+     * Localized version of street and streetNumber as described
+     * in this <a href="http://en.wikipedia.org/wiki/Address_(geography)#Mailing_address_format_by_country">
+     * Wikipedia article</a>.
+     * 
+     * @return a localized version depending on the countryCode
+     *         of this address
+     */
+    String getLocalizedAddress();
     
     String getAdditional();
     
