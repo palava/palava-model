@@ -22,7 +22,9 @@ package de.cosmocode.palava.model.business;
 import java.util.Date;
 import java.util.Locale;
 
-public interface ContactBase extends AccountMemberBase {
+import de.cosmocode.palava.model.base.EntityBase;
+
+public interface ContactBase extends EntityBase, AccountMember {
     
     String getTitle();
     

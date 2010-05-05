@@ -19,10 +19,21 @@
 
 package de.cosmocode.palava.model.business;
 
-import de.cosmocode.palava.model.base.EntityBase;
+/**
+ * Interface definition of account members. Using this
+ * interface ensures compliant and consistent naming conventions.
+ *
+ * @since 2.0
+ * @author Willi Schoenborn
+ */
+public interface AccountMember {
 
-public interface AccountMemberBase extends EntityBase {
-
+    /**
+     * Retrieves the associated account of this member.
+     * 
+     * @since 2.0
+     * @return the associated account
+     */
     AccountBase getAccount();
     
 }

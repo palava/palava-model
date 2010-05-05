@@ -27,7 +27,7 @@ import com.google.common.base.Function;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Ordering;
 
-import de.cosmocode.json.JSONMapable;
+import de.cosmocode.rendering.Renderable;
 
 /**
  * A location represents a geographic places addressed by a
@@ -35,7 +35,7 @@ import de.cosmocode.json.JSONMapable;
  *
  * @author Willi Schoenborn
  */
-public interface Location extends JSONMapable {
+public interface Location extends Renderable {
     
     double MAX_LONGITUDE = 180.0;
     double MIN_LONGITUDE = -180.0;
@@ -44,29 +44,29 @@ public interface Location extends JSONMapable {
     double MIN_LATITUDE = 0.0;
     
     /**
+     * A function which returns null if the given location contains a null
+     * latitude or null longitude.
+     */
+    Function<Location, Location> TO_NULL = new Function<Location, Location>() {
+        
+        @Override
+        public Location apply(Location from) {
+            return from.getLatitude() == null || from.getLongitude() == null ? null : from;
+        }
+        
+        @Override
+        public String toString() {
+            return "Location.TO_NULL";
+        };
+        
+    };
+    
+    /**
      * A orthodromic distance ordering based on a specified center location.
      *
      * @author Willi Schoenborn
      */
     public static final class DistanceOrdering extends Ordering<Location> {
-        
-        /**
-         * A function which returns null if the given location contains a null
-         * latitude or null longitude.
-         */
-        public static final Function<Location, Location> TO_NULL = new Function<Location, Location>() {
-            
-            @Override
-            public Location apply(Location from) {
-                return from.getLatitude() == null || from.getLongitude() == null ? null : from;
-            }
-            
-            @Override
-            public String toString() {
-                return String.format("%s.TO_NULL", DistanceOrdering.class.getSimpleName());
-            };
-            
-        };
         
         private static final Logger LOG = LoggerFactory.getLogger(DistanceOrdering.class);
         

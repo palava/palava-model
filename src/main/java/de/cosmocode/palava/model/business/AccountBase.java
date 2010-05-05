@@ -19,32 +19,53 @@
 
 package de.cosmocode.palava.model.business;
 
-import java.util.Set;
-
 import de.cosmocode.palava.model.base.EntityBase;
 
+/**
+ * Interface definitions of accounts. An account is container for
+ * {@link ContactBase contacts} and many more related entities. An instance of this type
+ * usually maps directly to a company or a business partner in real life.
+ *
+ * @since 2.0
+ * @author Willi Schoenborn
+ */
 public interface AccountBase extends EntityBase {
 
     /**
-     * Generic, can be anything...
+     * Retrieves the name of this account. The name can be virtually
+     * anything but usually refers to the official company name.
      *
-     * @return
+     * @return the name of this account
      */
     String getName();
 
+    /**
+     * Changes the name of this account to the specified name. The specified
+     * name may be trimmed before applied.
+     * 
+     * @param name the new name of this account
+     */
     void setName(String name);
 
     /**
+     * Retrieves the associated {@link AddressBase address} of this account.
      *
      * @return the address associated with this account, may never be null
      */
     AddressBase getAddress();
 
     /**
-     * Left to the implementation ...
+     * Retrieves all associated contacts of this account.
+     * 
+     * <p>
+     *   Implementation note: This method breaks a fundamental rule by specifying a
+     *   generic return value using wildcards. This is an intended <em>feature</em>
+     *   to allow sub classes to specify both: The collection type and the concrete
+     *   element type.
+     * </p>
      *
-     * @return
+     * @return all associated contacts
      */
-    Set<? extends ContactBase> getContacts();
+    Iterable<? extends ContactBase> getContacts();
 
 }

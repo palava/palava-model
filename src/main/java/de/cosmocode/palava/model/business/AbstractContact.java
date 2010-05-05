@@ -28,8 +28,6 @@ import javax.persistence.MappedSuperclass;
 import com.google.common.base.Preconditions;
 
 import de.cosmocode.commons.TrimMode;
-import de.cosmocode.json.JSONRenderer;
-import de.cosmocode.json.RenderLevel;
 import de.cosmocode.palava.model.base.AbstractEntity;
 
 /**
@@ -121,32 +119,6 @@ public abstract class AbstractContact extends AbstractEntity implements ContactB
     @Override
     public void setLocale(Locale locale) {
         this.locale = Preconditions.checkNotNull(locale, "Locale");
-    }
-
-    @Override
-    public JSONRenderer renderAsMap(JSONRenderer renderer) {
-        super.renderAsMap(renderer);
-
-        if (renderer.eq(RenderLevel.TINY)) {
-            renderer.
-                key("account").object().
-                    key("id").value(getAccount().getId()).
-                endObject().
-                key("title").value(getTitle()).
-                key("forename").value(getForename()).
-                key("surname").value(getSurname()).
-                key("locale").value(getLocale());
-        }
-        if (renderer.eq(RenderLevel.SHORT)) {
-            renderer.
-                key("activatedAt").value(getActivatedAt()).
-                key("isActivated").value(isActivated());
-        }
-        if (renderer.eq(RenderLevel.MEDIUM)) {
-            renderer.
-                key("address").object(getAddress());
-        }
-        return renderer;
     }
 
 }

@@ -20,15 +20,14 @@
 package de.cosmocode.palava.model.business;
 
 import com.google.common.base.Function;
-
-import de.cosmocode.json.JSONMapable;
+import de.cosmocode.rendering.Renderable;
 
 /**
  * A geographical is associated with a {@link Location}.
  *
  * @author Willi Schoenborn
  */
-public interface Geographical extends JSONMapable {
+public interface Geographical extends Renderable {
 
     /**
      * Can be used in combination with {@link Location.DistanceOrdering} to create

@@ -19,7 +19,9 @@
 
 package de.cosmocode.palava.model.business;
 
-public interface BankAccountBase {
+import de.cosmocode.rendering.Renderable;
+
+public interface BankAccountBase extends Renderable {
 
     String getAccountHolder();
     

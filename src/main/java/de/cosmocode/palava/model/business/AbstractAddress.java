@@ -24,7 +24,6 @@ import java.util.Locale;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.MappedSuperclass;
-import javax.persistence.Transient;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -32,8 +31,6 @@ import com.google.common.base.Preconditions;
 
 import de.cosmocode.commons.Patterns;
 import de.cosmocode.commons.TrimMode;
-import de.cosmocode.json.JSONRenderer;
-import de.cosmocode.json.RenderLevel;
 
 /**
  * Abstract base implementation of the {@link AddressBase} interface.
@@ -79,9 +76,6 @@ public abstract class AbstractAddress implements AddressBase {
     private String email;
     
     private String website;
-    
-    @Transient
-    private transient Location location;
     
     @Override
     public String getStreet() {
@@ -191,14 +185,6 @@ public abstract class AbstractAddress implements AddressBase {
         this.countryCode = this.countryCode.toUpperCase();
     }
     
-    @Override
-    public Location getLocation() {
-        if (location == null) {
-            location = new InternalLocation();
-        }
-        return location;
-    }
-    
     /**
      * Internal implementation of the {@link Location} interface which
      * owns a reference to the enclosing class and is able to directly manipulate the
@@ -206,7 +192,7 @@ public abstract class AbstractAddress implements AddressBase {
      *
      * @author Willi Schoenborn
      */
-    private final class InternalLocation extends AbstractLocation {
+    protected abstract class AbstractLocation implements Location {
         
         @Override
         public Double getLatitude() {
@@ -292,29 +278,4 @@ public abstract class AbstractAddress implements AddressBase {
         this.website = TrimMode.NULL.apply(website);
     }
     
-    @Override
-    public JSONRenderer renderAsMap(JSONRenderer renderer) {
-        if (renderer.eq(RenderLevel.MEDIUM)) {
-            renderer.
-                key("street").value(getStreet()).
-                key("streetNumber").value(getStreetNumber()).
-                key("postalCode").value(getPostalCode()).
-                key("cityName").value(getCityName()).
-                key("countryCode").value(getCountryCode()).
-                key("location").object(getLocation()).
-                key("email").value(getEmail()).
-                key("website").value(getWebsite());
-        }
-        if (renderer.eq(RenderLevel.LONG)) {
-            renderer.
-                key("additional").value(getAdditional()).
-                key("district").value(getDistrict()).
-                key("state").value(getState()).
-                key("phone").value(getPhone()).
-                key("mobilePhone").value(getMobilePhone()).
-                key("fax").value(getFax());
-        }
-        return renderer;
-    }
-
 }
