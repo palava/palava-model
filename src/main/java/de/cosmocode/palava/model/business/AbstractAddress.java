@@ -20,15 +20,19 @@
 package de.cosmocode.palava.model.business;
 
 import java.util.Locale;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.MappedSuperclass;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.validator.EmailValidator;
+import org.apache.commons.validator.UrlValidator;
 
 import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableSet;
 
+import de.cosmocode.commons.Locales;
 import de.cosmocode.commons.Patterns;
 import de.cosmocode.commons.TrimMode;
 
@@ -40,7 +44,19 @@ import de.cosmocode.commons.TrimMode;
 @Embeddable
 @MappedSuperclass
 public abstract class AbstractAddress implements AddressBase {
+    
+    private static final EmailValidator EMAIL_VALIDATOR = EmailValidator.getInstance();
+    private static final UrlValidator URL_VALIDATOR = new UrlValidator();
 
+    private static final Set<String> INVERSE_ADDRESS_COUNTRIES = ImmutableSet.of(
+        Locale.US.getCountry(), 
+        Locale.UK.getCountry(), 
+        Locale.CANADA.getCountry(),
+        Locales.AUSTRALIA.getCountry(),
+        Locale.FRANCE.getCountry(),
+        Locales.NEW_ZEALAND.getCountry()
+    );
+    
     private String street;
     
     @Column(name = "street_number")
@@ -99,13 +115,7 @@ public abstract class AbstractAddress implements AddressBase {
     
     @Override
     public String getLocalizedAddress() {
-        if (StringUtils.isBlank(countryCode)) {
-            return getAddress();
-        } else if (Locale.CANADA.getCountry().equals(countryCode)) {
-            return getAddressInverse();
-        } else if (Locale.UK.getCountry().equals(countryCode)) {
-            return getAddressInverse();
-        } else  if (Locale.US.getCountry().equals(countryCode)) {
+        if (INVERSE_ADDRESS_COUNTRIES.contains(countryCode)) {
             return getAddressInverse();
         } else {
             return getAddress();
@@ -113,11 +123,11 @@ public abstract class AbstractAddress implements AddressBase {
     }
     
     private String getAddress() {
-        return String.format("%s %s", street, streetNumber);
+        return String.format("%s %s", street, streetNumber).trim();
     }
     
     private String getAddressInverse() {
-        return String.format("%s %s", streetNumber, street);
+        return String.format("%s %s", streetNumber, street).trim();
     }
     
     @Override
@@ -176,13 +186,13 @@ public abstract class AbstractAddress implements AddressBase {
     }
     
     @Override
-    public void setCountryCode(String countryCode) {
-        this.countryCode = TrimMode.NULL.apply(countryCode);
-        if (this.countryCode == null) return;
+    public void setCountryCode(String code) {
+        this.countryCode = TrimMode.NULL.apply(code);
+        if (countryCode == null) return;
+        this.countryCode = countryCode.toUpperCase();
         Preconditions.checkArgument(Patterns.ISO_3166_1_ALPHA_2.matcher(countryCode).matches(), 
-                "%s does not match %s", countryCode, Patterns.ISO_3166_1_ALPHA_2.pattern()
+            "%s does not match %s", countryCode, Patterns.ISO_3166_1_ALPHA_2.pattern()
         );
-        this.countryCode = this.countryCode.toUpperCase();
     }
     
     /**
@@ -264,8 +274,10 @@ public abstract class AbstractAddress implements AddressBase {
     }
     
     @Override
-    public void setEmail(String email) {
-        this.email = TrimMode.NULL.apply(email);
+    public void setEmail(String e) {
+        this.email = TrimMode.NULL.apply(e);
+        if (email == null) return;
+        Preconditions.checkArgument(EMAIL_VALIDATOR.isValid(email), "%s is not a valid email", email);
     }
     
     @Override
@@ -274,8 +286,10 @@ public abstract class AbstractAddress implements AddressBase {
     }
     
     @Override
-    public void setWebsite(String website) {
-        this.website = TrimMode.NULL.apply(website);
+    public void setWebsite(String w) {
+        this.website = TrimMode.NULL.apply(w);
+        if (website == null) return;
+        Preconditions.checkArgument(URL_VALIDATOR.isValid(website), "%s is not a valid website", website);
     }
     
 }

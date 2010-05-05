@@ -85,6 +85,10 @@ public interface AddressBase extends Geographical {
      * in this <a href="http://en.wikipedia.org/wiki/Address_(geography)#Mailing_address_format_by_country">
      * Wikipedia article</a>.
      * 
+     * <p>
+     *   If no country code is set, the order defaults to: {@code Prenzlauer Allee 36}.
+     * </p>
+     * 
      * @return a localized version depending on the countryCode
      *         of this address
      */
@@ -218,25 +222,90 @@ public interface AddressBase extends Geographical {
      */
     boolean hasLocation();
     
-    
+    /**
+     * Retrieves the phone number of this address.
+     * 
+     * @since 2.0
+     * @return the phone number of this address
+     */
     String getPhone();
     
+    /**
+     * Changes the phone number of this address. The specified
+     * value may be trimmed before applied.
+     * 
+     * @since 2.0
+     * @param phone the new phone number
+     */
     void setPhone(String phone);
     
+    /**
+     * Retrieves the mobile phone numner of this address.
+     * 
+     * @since 2.0
+     * @return the phone number of this address
+     */
     String getMobilePhone();
     
+    /**
+     * Changes the phone number of this address. The specified
+     * value may be trimmed before applied.
+     * 
+     * @since 2.0
+     * @param mobilePhone the new phone number
+     */
     void setMobilePhone(String mobilePhone);
     
+    /**
+     * Retrieves the fax number of this address.
+     * 
+     * @since 2.0
+     * @return the fax number of this address
+     */
     String getFax();
     
+    /**
+     * Changes the fax number of this address. The specified
+     * value may be trimmed before applied.
+     * 
+     * @since 2.0
+     * @param fax the new fax number of this address
+     */
     void setFax(String fax);
     
+    /**
+     * Retrieves the email of this addresss.
+     * 
+     * @since 2.0
+     * @return the email of this address
+     */
     String getEmail();
     
+    /**
+     * Changes the email of this address. The specified
+     * value may be trimmed before applied.
+     * 
+     * @since 2.0
+     * @param email the new email
+     * @throws IllegalArgumentException if email is not null and is not a valid email
+     */
     void setEmail(String email);
     
+    /**
+     * Retrieves the website of this address.
+     * 
+     * @since 2.0
+     * @return the website of this address
+     */
     String getWebsite();
     
+    /**
+     * Changes the website of this address.
+     * 
+     * @since 2.0
+     * @param website the new website of this address
+     * @throws IllegalArgumentException if website is not null and is not a valid website
+     */
     void setWebsite(String website);
     
 }
