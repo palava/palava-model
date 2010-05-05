@@ -25,6 +25,7 @@ import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.Transient;
 
 import org.apache.commons.validator.EmailValidator;
 import org.apache.commons.validator.UrlValidator;
@@ -92,6 +93,9 @@ public abstract class AbstractAddress implements AddressBase {
     private String email;
     
     private String website;
+    
+    @Transient
+    private final transient Location location = new InternalLocation();
     
     @Override
     public String getStreet() {
@@ -195,6 +199,11 @@ public abstract class AbstractAddress implements AddressBase {
         );
     }
     
+    @Override
+    public Location getLocation() {
+        return location;
+    }
+    
     /**
      * Internal implementation of the {@link Location} interface which
      * owns a reference to the enclosing class and is able to directly manipulate the
@@ -202,7 +211,7 @@ public abstract class AbstractAddress implements AddressBase {
      *
      * @author Willi Schoenborn
      */
-    protected abstract class AbstractLocation implements Location {
+    private final class InternalLocation extends AbstractLocation {
         
         @Override
         public Double getLatitude() {
