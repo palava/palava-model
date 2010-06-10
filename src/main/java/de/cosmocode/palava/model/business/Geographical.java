@@ -17,6 +17,7 @@
 package de.cosmocode.palava.model.business;
 
 import com.google.common.base.Function;
+
 import de.cosmocode.rendering.Renderable;
 
 /**
