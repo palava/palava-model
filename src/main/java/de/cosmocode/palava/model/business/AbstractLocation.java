@@ -16,6 +16,8 @@
 
 package de.cosmocode.palava.model.business;
 
+import com.google.common.base.Objects;
+
 import de.cosmocode.rendering.Renderer;
 import de.cosmocode.rendering.RenderingException;
 import de.cosmocode.rendering.RenderingLevel;
@@ -29,10 +31,35 @@ import de.cosmocode.rendering.RenderingLevel;
 public abstract class AbstractLocation implements Location {
 
     @Override
+    public boolean equals(Object that) {
+        if (this == that) {
+            return true;
+        } else if (that instanceof Location) {
+            final Location other = Location.class.cast(that);
+            return Objects.equal(this.getLatitude(), other.getLatitude()) &&
+                Objects.equal(this.getLongitude(), other.getLongitude());
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(getLatitude(), getLongitude());
+    }
+
+    @Override
     public void render(Renderer renderer, RenderingLevel level) throws RenderingException {
         renderer.
             key("latitude").value(getLatitude()).
             key("longitude").value(getLongitude());
     }
+
+    @Override
+    public String toString() {
+        return "Location {latitude=" + getLatitude() + ", longitude=" + getLongitude() + "}";
+    }
+    
+    
 
 }
