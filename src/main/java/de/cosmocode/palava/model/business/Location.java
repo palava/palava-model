@@ -92,9 +92,7 @@ public interface Location extends Renderable {
         
         @Override
         public String toString() {
-            return String.format("%s.%s(%s)", 
-                Location.class.getSimpleName(), DistanceOrdering.class.getSimpleName(), center
-            );
+            return String.format("Location.DistanceOrdering(%s)", center);
         }
         
         /**
