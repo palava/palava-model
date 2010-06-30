@@ -17,6 +17,7 @@
 package de.cosmocode.palava.model.business;
 
 import com.google.common.base.Preconditions;
+import com.google.common.base.Predicate;
 
 /**
  * Utility class for {@link Location}s.
@@ -30,40 +31,12 @@ public final class Locations {
         
     }
     
-    private static void checkArgument(boolean expression, String format, double a, double b) {
-        if (expression) {
-            return;
+    private static <T> T check(Predicate<? super T> predicate, T input) {
+        if (predicate.apply(input)) {
+            return input;
         } else {
-            throw new IllegalArgumentException(String.format(format, a, b));
+            throw new IllegalArgumentException(String.format("%s does not satisfy %s", input, predicate));
         }
-    }
-
-    private static double checkLatitude(double latitude) {
-        checkArgument(latitude >= Location.MIN_LATITUDE, "%s must not be less than %s", 
-            latitude, Location.MIN_LATITUDE);
-        checkArgument(latitude <= Location.MAX_LATITUDE, "%s must not be greater than %s", 
-            latitude, Location.MAX_LATITUDE);
-        return latitude;
-    }
-    
-    private static Double checkLatitude(Double latitude) {
-        Preconditions.checkNotNull(latitude, "Latitude");
-        checkLatitude(latitude.doubleValue());
-        return latitude;
-    }
-    
-    private static double checkLongitude(double longitude) {
-        checkArgument(longitude >= Location.MIN_LONGITUDE, "%s must not be less than %s", 
-            longitude, Location.MIN_LONGITUDE);
-        checkArgument(longitude <= Location.MAX_LONGITUDE, "%s must not be greater than %s",
-            longitude, Location.MAX_LONGITUDE);
-        return longitude;
-    }
-    
-    private static Double checkLongitude(Double longitude) {
-        Preconditions.checkNotNull(longitude, "Longitude");
-        checkLongitude(longitude.doubleValue());
-        return longitude;
     }
     
     /**
@@ -113,8 +86,8 @@ public final class Locations {
      * Creates a modifiable {@link Location} using the given latitude and longitude.
      * 
      * @since 2.1
-     * @param latitude the location's latitude
-     * @param longitude the location's longitude
+     * @param latitude the location's latitude (null permitted)
+     * @param longitude the location's longitude (null permitted)
      * @return a modifiable location initialized with the given coordinates
      * @throws IllegalArgumentException if latitude is greater than {@link Location#MAX_LATITUDE}
      *         or less than {@link Location#MIN_LATITUDE} or longitude is greater than {@link Location#MAX_LONGITUDE}
@@ -153,12 +126,12 @@ public final class Locations {
 
         @Override
         public void setLatitude(Double latitude) {
-            this.latitude = latitude == null ? null : checkLatitude(latitude);
+            this.latitude = latitude == null ? null : check(Location.VALID_LATITUDE, latitude);
         }
 
         @Override
         public void setLongitude(Double longitude) {
-            this.longitude = longitude == null ? null : checkLongitude(longitude);
+            this.longitude = longitude == null ? null : check(Location.VALID_LONGITUDE, longitude);
         }
         
     }
@@ -189,8 +162,8 @@ public final class Locations {
      *         or less than {@link Location#MIN_LONGITUDE}.
      */
     public static Location immutableLocation(Double latitude, Double longitude) {
-        if (latitude != null) checkLatitude(latitude);
-        if (longitude != null) checkLongitude(longitude);
+        if (latitude != null) check(Location.VALID_LATITUDE, latitude);
+        if (longitude != null) check(Location.VALID_LONGITUDE, longitude);
         return new ImmutableLocation(latitude, longitude);
     }
     

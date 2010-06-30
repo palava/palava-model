@@ -22,6 +22,8 @@ import org.slf4j.LoggerFactory;
 
 import com.google.common.base.Function;
 import com.google.common.base.Preconditions;
+import com.google.common.base.Predicate;
+import com.google.common.base.Predicates;
 import com.google.common.collect.Ordering;
 
 import de.cosmocode.rendering.Renderable;
@@ -30,6 +32,7 @@ import de.cosmocode.rendering.Renderable;
  * A location represents a geographic places addressed by a
  * longitude and a latitude.
  *
+ * @since 2.0
  * @author Willi Schoenborn
  */
 public interface Location extends Renderable {
@@ -43,6 +46,8 @@ public interface Location extends Renderable {
     /**
      * A function which returns null if the given location contains a null
      * latitude or null longitude.
+     * 
+     * @since 2.0
      */
     Function<Location, Location> TO_NULL = new Function<Location, Location>() {
         
@@ -59,8 +64,69 @@ public interface Location extends Renderable {
     };
     
     /**
+     * A predicate which matches non-null {@link Double} values which are greater than or equals to
+     * {@link Location#MIN_LONGITUDE} and equals to or less than {@link Location#MAX_LONGITUDE}.
+     * 
+     * @since 2.2
+     */
+    Predicate<Double> VALID_LONGITUDE = Predicates.and(Predicates.notNull(), new Predicate<Double>() {
+        
+        @Override
+        public boolean apply(Double input) {
+            return input >= MIN_LONGITUDE && input <= MAX_LONGITUDE;
+        }
+        
+        @Override
+        public String toString() {
+            return "Location.VALID_LONGITUDE";
+        };
+        
+    });
+
+    /**
+     * A predicate which matches non-null {@link Double} values which are greater than or equals to
+     * {@link Location#MIN_LATITUDE} and equals to or less than {@link Location#MAX_LATITUDE}.
+     * 
+     * @since 2.2
+     */
+    Predicate<Double> VALID_LATITUDE = Predicates.and(Predicates.notNull(), new Predicate<Double>() {
+        
+        @Override
+        public boolean apply(Double input) {
+            return input >= MIN_LATITUDE && input <= MAX_LATITUDE;
+        }
+        
+        @Override
+        public String toString() {
+            return "Location.VALID_LATITUDE";
+        };
+        
+    });
+    
+    /**
+     * A predicate which matches non-null {@link Location} who's longitude and latitude satisfy
+     * {@link Location#VALID_LONGITUDE} and {@link Location#VALID_LATITUDE} respectively.
+     * 
+     * @since 2.2
+     */
+    Predicate<Location> VALID_LOCATION = Predicates.and(Predicates.notNull(), new Predicate<Location>() {
+        
+        @Override
+        public boolean apply(Location input) {
+            return VALID_LONGITUDE.apply(input.getLongitude()) && VALID_LATITUDE.apply(input.getLatitude());
+        }
+        
+        @Override
+        public String toString() {
+            return "Location.VALID_LOCATION";
+        };
+        
+    });
+    
+    /**
      * A orthodromic distance ordering based on a specified center location.
      *
+     * @since 2.0
      * @author Willi Schoenborn
      */
     public static final class DistanceOrdering extends Ordering<Location> {
@@ -99,8 +165,7 @@ public interface Location extends Renderable {
          * Creates a new {@link DistanceOrdering} which puts null locations and locations 
          * with null latitude or null longitude to the end.
          * 
-         * @param center the center this ordering should use for distance
-         *         calculations
+         * @param center the center this ordering should use for distance calculations
          * @return an ordering of locations
          */
         public static Ordering<Location> create(Location center) {
