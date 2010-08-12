@@ -43,7 +43,7 @@ public interface Geographical extends Renderable {
         
         @Override
         public String toString() {
-            return String.format("%s.TO_LOCATION", Geographical.class.getSimpleName());
+            return "Geographical.TO_LOCATION";
         };
         
     };
