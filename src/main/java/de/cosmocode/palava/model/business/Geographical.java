@@ -21,7 +21,7 @@ import com.google.common.base.Function;
 import de.cosmocode.rendering.Renderable;
 
 /**
- * A geographical is associated with a {@link Location}.
+ * An object associated with a {@link Location}.
  *
  * @author Willi Schoenborn
  */
