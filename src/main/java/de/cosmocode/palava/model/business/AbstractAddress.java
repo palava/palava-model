@@ -24,6 +24,7 @@ import javax.persistence.Embeddable;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.validator.EmailValidator;
 import org.apache.commons.validator.UrlValidator;
 
@@ -188,9 +189,8 @@ public abstract class AbstractAddress implements AddressBase {
     
     @Override
     public void setCountryCode(String code) {
-        this.countryCode = TrimMode.NULL.apply(code);
+        this.countryCode = StringUtils.upperCase(TrimMode.NULL.apply(code));
         if (countryCode == null) return;
-        this.countryCode = countryCode.toUpperCase();
         Preconditions.checkArgument(Patterns.ISO_3166_1_ALPHA_2.matcher(countryCode).matches(), 
             "%s does not match %s", countryCode, Patterns.ISO_3166_1_ALPHA_2.pattern()
         );
