@@ -26,7 +26,7 @@ import de.cosmocode.palava.model.base.EntityBase;
  * @since 2.0
  * @author Willi Schoenborn
  */
-public interface AccountBase extends EntityBase {
+public interface AccountBase extends EntityBase, Addressable {
 
     /**
      * Retrieves the name of this account. The name can be virtually
@@ -49,6 +49,7 @@ public interface AccountBase extends EntityBase {
      *
      * @return the address associated with this account, may never be null
      */
+    @Override
     AddressBase getAddress();
 
     /**
