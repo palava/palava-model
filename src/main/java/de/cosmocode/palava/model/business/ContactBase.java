@@ -28,7 +28,7 @@ import de.cosmocode.palava.model.base.EntityBase;
  * @since 2.0
  * @author Willi Schoenborn
  */
-public interface ContactBase extends EntityBase, AccountMember {
+public interface ContactBase extends EntityBase, AccountMember, Addressable {
    
     /**
      * Retrieves the title of this contact. This is usually something like
