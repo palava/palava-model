@@ -8,9 +8,9 @@
   <groupId>de.cosmocode.palava</groupId>
   <artifactId>palava-model</artifactId>
   <name>Palava Model</name>
-  <version>3.2.0</version>
+  <version>3.3-SNAPSHOT</version>
   <scm>
-    <developerConnection>scm:svn:https://palava.svn.cosmocode.de/palava-model/tags/3.2.0</developerConnection>
+    <developerConnection>scm:svn:https://palava.svn.cosmocode.de/palava-model/trunk</developerConnection>
   </scm>
   <repositories>
     <repository>
