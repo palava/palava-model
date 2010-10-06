@@ -16,6 +16,11 @@
 
 package de.cosmocode.palava.model.business;
 
+import javax.measure.Measure;
+import javax.measure.quantity.Length;
+import javax.measure.unit.SI;
+import javax.measure.unit.Unit;
+
 import org.geotools.referencing.GeodeticCalculator;
 
 import com.google.common.base.Preconditions;
@@ -216,13 +221,28 @@ public final class Locations {
      * @return the distance between source and destination in meters
      * @throws NullPointerException if source or destination is null
      */
-    public static double distance(Location source, Location destination) {
+    public static long distance(Location source, Location destination) {
         Preconditions.checkNotNull(source, "Source");
         Preconditions.checkNotNull(destination, "Destination");
         final GeodeticCalculator calculator = new GeodeticCalculator();
         calculator.setStartingGeographicPoint(source.getLongitude(), source.getLatitude());
         calculator.setDestinationGeographicPoint(destination.getLongitude(), destination.getLatitude());
-        return calculator.getOrthodromicDistance();
+        return (long) calculator.getOrthodromicDistance();
+    }
+
+    /**
+     * Calculates the distance between two locations in the specified unit.
+     *
+     * @since 3.3
+     * @param source the source location
+     * @param destination the destination location
+     * @param unit the lenth unit 
+     * @return the distance between source and destination in the given unit
+     * @throws NullPointerException if source or destination is null
+     */
+    public static long distance(Location source, Location destination, Unit<Length> unit) {
+        final long distance = distance(source, destination);
+        return Measure.valueOf(distance, SI.METER).longValue(unit);
     }
     
 }
