@@ -16,6 +16,8 @@
 
 package de.cosmocode.palava.model.business;
 
+import org.geotools.referencing.GeodeticCalculator;
+
 import com.google.common.base.Preconditions;
 import com.google.common.base.Predicate;
 
@@ -203,6 +205,24 @@ public final class Locations {
             throw new UnsupportedOperationException();
         }
 
+    }
+
+    /**
+     * Calculates the distance between two locations in meters.
+     *
+     * @since 3.3
+     * @param source the source location
+     * @param destination the destination location
+     * @return the distance between source and destination in meters
+     * @throws NullPointerException if source or destination is null
+     */
+    public static double distance(Location source, Location destination) {
+        Preconditions.checkNotNull(source, "Source");
+        Preconditions.checkNotNull(destination, "Destination");
+        final GeodeticCalculator calculator = new GeodeticCalculator();
+        calculator.setStartingGeographicPoint(source.getLongitude(), source.getLatitude());
+        calculator.setDestinationGeographicPoint(destination.getLongitude(), destination.getLatitude());
+        return calculator.getOrthodromicDistance();
     }
     
 }
