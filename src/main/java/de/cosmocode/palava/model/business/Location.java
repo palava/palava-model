@@ -16,6 +16,8 @@
 
 package de.cosmocode.palava.model.business;
 
+import javax.annotation.Nullable;
+
 import org.geotools.referencing.GeodeticCalculator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,7 +46,7 @@ public interface Location extends Renderable {
     double MIN_LATITUDE = 0.0;
     
     /**
-     * A function which returns null if the given location contains a null
+     * A function which returns null if the given location is null or contains a null
      * latitude or null longitude.
      * 
      * @since 2.0
@@ -52,8 +54,14 @@ public interface Location extends Renderable {
     Function<Location, Location> TO_NULL = new Function<Location, Location>() {
         
         @Override
-        public Location apply(Location from) {
-            return from.getLatitude() == null || from.getLongitude() == null ? null : from;
+        public Location apply(@Nullable Location from) {
+            if (from == null) {
+                return null;
+            } else if (from.getLatitude() == null || from.getLongitude() == null) {
+                return null;
+            } else {
+                return from;
+            }
         }
         
         @Override
@@ -69,11 +77,15 @@ public interface Location extends Renderable {
      * 
      * @since 2.2
      */
-    Predicate<Double> VALID_LONGITUDE = Predicates.and(Predicates.notNull(), new Predicate<Double>() {
+    Predicate<Double> VALID_LONGITUDE = new Predicate<Double>() {
         
         @Override
         public boolean apply(Double input) {
-            return input >= MIN_LONGITUDE && input <= MAX_LONGITUDE;
+            if (input == null) {
+                return false;
+            } else {
+                return input >= MIN_LONGITUDE && input <= MAX_LONGITUDE;
+            }
         }
         
         @Override
@@ -81,7 +93,7 @@ public interface Location extends Renderable {
             return "Location.VALID_LONGITUDE";
         };
         
-    });
+    };
 
     /**
      * A predicate which matches non-null {@link Double} values which are greater than or equals to
@@ -89,11 +101,15 @@ public interface Location extends Renderable {
      * 
      * @since 2.2
      */
-    Predicate<Double> VALID_LATITUDE = Predicates.and(Predicates.notNull(), new Predicate<Double>() {
+    Predicate<Double> VALID_LATITUDE = new Predicate<Double>() {
         
         @Override
         public boolean apply(Double input) {
-            return input >= MIN_LATITUDE && input <= MAX_LATITUDE;
+            if (input == null) {
+                return false;
+            } else {
+                return input >= MIN_LATITUDE && input <= MAX_LATITUDE;
+            }
         }
         
         @Override
@@ -101,7 +117,7 @@ public interface Location extends Renderable {
             return "Location.VALID_LATITUDE";
         };
         
-    });
+    };
     
     /**
      * A predicate which matches non-null {@link Location} who's longitude and latitude satisfy
@@ -109,11 +125,15 @@ public interface Location extends Renderable {
      * 
      * @since 2.2
      */
-    Predicate<Location> VALID_LOCATION = Predicates.and(Predicates.notNull(), new Predicate<Location>() {
+    Predicate<Location> VALID_LOCATION = new Predicate<Location>() {
         
         @Override
         public boolean apply(Location input) {
-            return VALID_LONGITUDE.apply(input.getLongitude()) && VALID_LATITUDE.apply(input.getLatitude());
+            if (input == null) {
+                return false;
+            } else {
+                return VALID_LONGITUDE.apply(input.getLongitude()) && VALID_LATITUDE.apply(input.getLatitude());
+            }
         }
         
         @Override
@@ -121,7 +141,7 @@ public interface Location extends Renderable {
             return "Location.VALID_LOCATION";
         };
         
-    });
+    };
     
     /**
      * A orthodromic distance ordering based on a specified center location.
@@ -169,7 +189,7 @@ public interface Location extends Renderable {
          * @return an ordering of locations
          */
         public static Ordering<Location> create(Location center) {
-            return new DistanceOrdering(center).nullsLast().onResultOf(TO_NULL).nullsLast(); 
+            return new DistanceOrdering(center).nullsLast().onResultOf(TO_NULL); 
         }
         
     }
