@@ -182,7 +182,7 @@ public interface Location extends Renderable {
          * @return an ordering of locations
          */
         public static Ordering<Location> create(Location center) {
-            return new DistanceOrdering(center).nullsLast().onResultOf(TO_NULL); 
+            return new DistanceOrdering(center).nullsLast().onResultOf(TO_NULL).nullsLast(); 
         }
         
     }
