@@ -16,7 +16,7 @@
 
 package de.cosmocode.palava.model.business;
 
-import javax.annotation.Nullable;
+import javax.annotation.Nonnull;
 
 import org.geotools.referencing.GeodeticCalculator;
 import org.slf4j.Logger;
@@ -25,7 +25,6 @@ import org.slf4j.LoggerFactory;
 import com.google.common.base.Function;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Predicate;
-import com.google.common.base.Predicates;
 import com.google.common.collect.Ordering;
 
 import de.cosmocode.rendering.Renderable;
@@ -46,7 +45,7 @@ public interface Location extends Renderable {
     double MIN_LATITUDE = 0.0;
     
     /**
-     * A function which returns null if the given location is null or contains a null
+     * A function which returns null if the given location contains a null
      * latitude or null longitude.
      * 
      * @since 2.0
@@ -54,14 +53,8 @@ public interface Location extends Renderable {
     Function<Location, Location> TO_NULL = new Function<Location, Location>() {
         
         @Override
-        public Location apply(@Nullable Location from) {
-            if (from == null) {
-                return null;
-            } else if (from.getLatitude() == null || from.getLongitude() == null) {
-                return null;
-            } else {
-                return from;
-            }
+        public Location apply(@Nonnull Location from) {
+            return from.getLatitude() == null || from.getLongitude() == null ? null : from;
         }
         
         @Override
