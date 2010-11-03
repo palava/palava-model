@@ -26,6 +26,8 @@ import org.geotools.referencing.GeodeticCalculator;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Predicate;
 
+import de.cosmocode.commons.Conditions;
+
 /**
  * Utility class for {@link Location}s.
  *
@@ -36,14 +38,6 @@ public final class Locations {
     
     private Locations() {
         
-    }
-    
-    private static <T> T check(Predicate<? super T> predicate, T input) {
-        if (predicate.apply(input)) {
-            return input;
-        } else {
-            throw new IllegalArgumentException(String.format("%s does not satisfy %s", input, predicate));
-        }
     }
     
     /**
@@ -59,37 +53,6 @@ public final class Locations {
     }
     
     /**
-     * Implementation of {@link Locations#unmodifiableLocation(Location)}.
-     *
-     * @since 2.1
-     * @author Willi Schoenborn
-     */
-    private static final class UnmodifiableLocation extends ForwardingLocation {
-        
-        private final Location location;
-
-        public UnmodifiableLocation(Location location) {
-            this.location = Preconditions.checkNotNull(location, "Location");
-        }
-
-        @Override
-        protected Location delegate() {
-            return location;
-        }
-
-        @Override
-        public void setLatitude(Double latitude) {
-            throw new UnsupportedOperationException();
-        }
-
-        @Override
-        public void setLongitude(Double longitude) {
-            throw new UnsupportedOperationException();
-        }
-        
-    }
-    
-    /**
      * Creates a modifiable {@link Location} using the given latitude and longitude.
      * 
      * @since 2.1
@@ -102,45 +65,6 @@ public final class Locations {
      */
     public static Location modifiableLocation(Double latitude, Double longitude) {
         return new ModifiableLocation(latitude, longitude);
-    }
-    
-    /**
-     * Implementation of {@link Locations#modifiableLocation(Double, Double)}.
-     *
-     * @since 2.1
-     * @author Willi Schoenborn
-     */
-    private static final class ModifiableLocation extends AbstractLocation {
-        
-        private Double latitude;
-        
-        private Double longitude;
-
-        public ModifiableLocation(Double latitude, Double longitude) {
-            setLatitude(latitude);
-            setLongitude(longitude);
-        }
-
-        @Override
-        public Double getLatitude() {
-            return latitude;
-        }
-
-        @Override
-        public Double getLongitude() {
-            return longitude;
-        }
-
-        @Override
-        public void setLatitude(Double latitude) {
-            this.latitude = latitude == null ? null : check(Location.VALID_LATITUDE, latitude);
-        }
-
-        @Override
-        public void setLongitude(Double longitude) {
-            this.longitude = longitude == null ? null : check(Location.VALID_LONGITUDE, longitude);
-        }
-        
     }
     
     /**
@@ -169,49 +93,11 @@ public final class Locations {
      *         or less than {@link Location#MIN_LONGITUDE}.
      */
     public static Location immutableLocation(Double latitude, Double longitude) {
-        if (latitude != null) check(Location.VALID_LATITUDE, latitude);
-        if (longitude != null) check(Location.VALID_LONGITUDE, longitude);
+        if (latitude != null) Conditions.checkArgument(Location.VALID_LATITUDE, latitude);
+        if (longitude != null) Conditions.checkArgument(Location.VALID_LONGITUDE, longitude);
         return new ImmutableLocation(latitude, longitude);
     }
     
-    /**
-     * Implementation of {@link Locations#immutableLocation(double, double)}.
-     *
-     * @since 2.1
-     * @author Willi Schoenborn
-     */
-    private static final class ImmutableLocation extends AbstractLocation {
-
-        private final Double latitude;
-        private final Double longitude;
-
-        public ImmutableLocation(Double latitude, Double longitude) {
-            this.latitude = latitude;
-            this.longitude = longitude;
-        }
-
-        @Override
-        public Double getLatitude() {
-            return latitude;
-        }
-
-        @Override
-        public Double getLongitude() {
-            return longitude;
-        }
-
-        @Override
-        public void setLatitude(Double latitude) {
-            throw new UnsupportedOperationException();
-        }
-
-        @Override
-        public void setLongitude(Double longitude) {
-            throw new UnsupportedOperationException();
-        }
-
-    }
-
     /**
      * Calculates the distance between two locations in meters.
      *
