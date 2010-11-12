@@ -41,6 +41,23 @@ public final class Locations {
     }
     
     /**
+     * Returns a location which is not null, but provides only null coordinates.
+     * The returned location is immutable, to put it in another way: both {@link Location#setLatitude(Double)}
+     * and {@link Location#setLongitude(Double)} throw {@link UnsupportedOperationException}s.
+     * 
+     * <p>
+     *   This location is especially useful if you want to get rid of null checks. If any entity
+     *   does not have an associated location, just return this.
+     * </p>
+     *
+     * @since 3.3
+     * @return a dummy location.
+     */
+    public static Location none() {
+        return NoneLocation.INSTANCE;
+    }
+    
+    /**
      * Returns an unmodifiable view of the given location.
      * 
      * @since 2.1
