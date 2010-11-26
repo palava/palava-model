@@ -24,7 +24,6 @@ import javax.measure.unit.Unit;
 import org.geotools.referencing.GeodeticCalculator;
 
 import com.google.common.base.Preconditions;
-import com.google.common.base.Predicate;
 
 import de.cosmocode.commons.Conditions;
 
