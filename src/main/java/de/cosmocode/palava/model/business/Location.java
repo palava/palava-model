@@ -42,7 +42,7 @@ public interface Location extends Renderable {
     double MIN_LONGITUDE = -180.0;
     
     double MAX_LATITUDE = 90.0;
-    double MIN_LATITUDE = 0.0;
+    double MIN_LATITUDE = -90.0;
     
     /**
      * A function which returns null if the given location contains a null
