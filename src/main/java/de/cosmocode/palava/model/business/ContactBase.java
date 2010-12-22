@@ -88,6 +88,7 @@ public interface ContactBase extends EntityBase, AccountMember, Addressable {
      * @since 2.0
      * @return the associated address, may never be null
      */
+    @Override
     AddressBase getAddress();
     
     /**

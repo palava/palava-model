@@ -200,6 +200,7 @@ public interface AddressBase extends Geographical {
      * 
      * @return the location of this address, may never be null
      */
+    @Override
     Location getLocation();
     
     /**
