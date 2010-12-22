@@ -60,7 +60,7 @@ public interface Location extends Renderable {
         @Override
         public String toString() {
             return "Location.TO_NULL";
-        };
+        }
         
     };
     
@@ -84,7 +84,7 @@ public interface Location extends Renderable {
         @Override
         public String toString() {
             return "Location.VALID_LONGITUDE";
-        };
+        }
         
     };
 
@@ -108,7 +108,7 @@ public interface Location extends Renderable {
         @Override
         public String toString() {
             return "Location.VALID_LATITUDE";
-        };
+        }
         
     };
     
@@ -132,7 +132,7 @@ public interface Location extends Renderable {
         @Override
         public String toString() {
             return "Location.VALID_LOCATION";
-        };
+        }
         
     };
     

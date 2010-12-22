@@ -44,7 +44,7 @@ public interface Geographical extends Renderable {
         @Override
         public String toString() {
             return "Geographical.TO_LOCATION";
-        };
+        }
         
     };
     
