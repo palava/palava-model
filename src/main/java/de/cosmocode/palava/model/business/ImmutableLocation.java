@@ -17,7 +17,7 @@
 package de.cosmocode.palava.model.business;
 
 /**
- * Implementation of {@link Locations#immutableLocation(double, double)}.
+ * Implementation of {@link Locations#immutableLocation(Double, Double)}.
  *
  * @since 2.1
  * @author Willi Schoenborn
